@@ -21,8 +21,8 @@
   * **1회차(2021-10-24) - 1. 노드 시작하기**
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week1/ch.choi.md)
   * **2회차(2021-10-31) - 2. 알아두어야 할 자바스크립트(1/2)**
-    * [younggeun0]()
-    * [ch.choi]()
+    * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week2/younggeun0)
+    * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week2/ch.choi.md)
   * **3회차(2021-11-07) - 2. 알아두어야 할 자바스크립트(2/2)**
     * [minj0i]()
     * [younggeun0]()
