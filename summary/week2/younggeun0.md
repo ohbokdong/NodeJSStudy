@@ -469,15 +469,181 @@ async function other() {
 
 ## 2.2 프론트엔드 자바스크립트
 
+* 프론트엔드에 사용되는 기능들을 설명
+* 예제 코드를 위해 몇가지 소개
+
 ### AJAX
+
+* 비동기적 웹 서비스를 개발할 때 사용하는 기법
+* **페이지 이동 없이 서버에 요청을 보내고 응답을 받는 기술**
+* 보통 AJAX 요청은 jQuery나 axios 같은 라이브러리를 이용해서 보냄
+  * 브라우저에서 XMLHttpRequest 객체를 제공하긴 하지만 사용방법이 복잡하고 서버에서는 사용할 수 없으므로 책에서는 axios를 사용
+* 프론트앤드에서 사용하려면 HTML 파일을 만들고 script 태그를 추가해야 함
+
+```html
+<!-- front.html -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    // js code
+</script>
+```
+
+
+* axios.get 함수의 인수로 요청을 보낼 주소를 넣음
+  * axios.get도 내부에 new Promise가 들어있으므로 then과 catch를 사용할 수 있음
+  * result.data에는 서버로부터 보낸 데이터가 들어있음
+
+```js
+axios.get('https://www.zerocho.com/api/get')
+    .then(result => {
+        console.log(result);
+        console.log(result.data); // {}
+    })
+    .catch(error => {
+        console.error(error);
+    });
+```
+
+![img1]()
+
+
+* 프로미스이므로 async/ await 방식으로 변경 가능
+  * 익명함수라서 즉시 실행을 위해 코드를 소괄호로 감싸서 호출한 예제
+
+```js
+(async () => {
+    try {
+        const result = await axios.get('https://www.zerocho.com/api/get');
+        console.log(result);
+        console.log(result.data);
+    } catch (error) {
+        console.error(error);
+    }
+})();
+```
+
+* POST 방식의 요청 예시
+  * POST 요청에서는 데이터를 서버로 보낼 수 있음, 두 번째 인수로 데이터를 넣어 보내는 것이 다름
+  * 아래 코드는 CORS로 응답이 안돼 확인불가
+
+```js
+(async () => {
+    try {
+        const result = await axios.post('https://www.zerocho.com/api/post/json', {
+            name: 'zerocho',
+            birth: '1994',
+        });
+        console.log(result);
+        console.log(result.data);
+    } catch (error) {
+        console.error(error);
+    }
+})();
+```
 
 ### FormData
 
+* HTML form 태그의 데이터를 동적으로 제어할 수 있는 기능, AJAX와 주로 함께 사용됨
+* 먼저 FormData 생성자로 formData 객체를 만듦
+  * 생성된 객체의 append 메서드로 키-값 형식의 데이터를 저장 가능
+  * append 메서드를 여러번 사용해서 키 하나에 여러 개의 값을 추가 가능
+  * has 메서드는 주어진 키에 해당하는 값이 있는 여부를 반환
+  * get 메서드는 주어진 키에 해당하는 값 하나를 가져옴
+  * getAll 메서드는 해당하는 모든 값을 가져옴
+  * delete 메서드는 현재 키를 제거하는 메서드
+  * set은 현재 키를 수정하는 메서드
+
+```js
+const formData = new FormData();
+
+formData.append('name', 'young');
+formData.append('item', 'orange');
+formData.append('item', 'melon');
+
+formData.has('item'); // true
+formData.has('money'); // false
+
+formData.get('item'); // orange
+formData.getAll('item'); // ['orange', 'melon']
+
+formData.append('test', ['hi', 'zero']);
+formData.get('test'); // hi, zero
+
+formData.delete('test');
+formData.get('test'); // null
+formData.set('item', 'apple');
+formData.getAll('item'); // ['apple']
+```
+
+* formData를 axios로 서버에 보냄
+
+```js
+(async () => {
+    try {
+        const formData = new FormData();
+        formData.append('name', 'zerocho');
+        formData.append('birth', 1994);
+
+        const result = await axios.post('https://www.zerocho.com/api/post/formdata', formData);
+        console.log(result);
+        console.log(result.data);
+        
+    } catch (error) {
+        console.error(error);
+    }
+})();
+```
+
 ### encodeURIComponent, decodeURIComponent
+
+* AJAX 요청을 보낼 때 URL에 한글이 들어가는 경우가 있는데 서버 종류에 따라 서버가 한글을 이해하지 못하는 경우가 존재
+    * 이럴 땐 window 객체의 [encodeURIComponent](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) 메서드를 사용
+        * encodeURIComponent 메서드는 URI의 특정한 문자를 UTF-8로 인코딩해 URI 구성요소로 인코딩한 새로운 문자열을 반환함
+
+```js
+(async () => {
+    try {
+        const result = await axios.get(`https://www.zerocho.com/api/search/${encodeURIComponent('노드')}`);
+
+
+        console.log(result);
+        console.log(result.data);
+    
+    } catch (error) {
+        console.error(error);
+    }
+})();
+```
+
+* 받는 쪽에서는 decodeURIComponent를 사용함
 
 ### 데이터 속성과 dataset
 
+* 노드를 웹 서버로 사용하는 경우, 클라이언트(프론트앤드)와 빈번하게 데이터를 주고받게 됨
+  * 이 때 서버에서 보내준 데이터를 프론트앤드 어디에 넣어야 할지 고민하게 됨
+* 프론트앤드에 데이터를 내려보낼 때 첫 번째로 고려할 점은 보안
+  * 클라이언트(프론트앤드)에 민감한 데이터를 내려보내는 것은 위험!
+  * 보안과 무관한 데이터들은 자유롭게 보내도 됨
+* JS 변수에 저장해도 되지만 HTML5에도 HTML과 관련된 데이터를 저장하는 공식적인 방법이 있음
+* 데이터 속성(Data Attribute)
+  * HTML 태그 속성으로 data-로 시작하는 것들을 넣는 것
+  * 데이터 속성의 장점은 JS로 쉽게 접근 가능한 점
+    * data- 접두어는 사라지고 -뒤에 위치한 글자는 대문자가 됨
+  * 반대로 dataset에 데이터를 넣어도 HTML 태그에 반영됨
+    * dataset.monthSalary = 10000;을 넣으면 data-month-salary="10000"이라는 속성이 생김
 
+```html
+<ul>
+    <li data-id="1" data-user-job="programmer">Zero</li>
+    <li data-id="2" data-user-job="coder">Young</li>
+    <li data-id="3" data-user-job="anotherCoder">Chung</li>
+</ul>
+<script>
+    console.log(document.querySelector('li').dataset);
+    // { id; '1', userJob: 'programmer' }
+    document.querySelector('li').dataset.monthSalary = 10000;
+</script>
+```
 
 ## 2.3 함께 보면 좋은 자료
 
