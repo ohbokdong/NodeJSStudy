@@ -504,7 +504,7 @@ axios.get('https://www.zerocho.com/api/get')
     });
 ```
 
-![img1]()
+![img1](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week2/img/img1.png?raw=true)
 
 
 * 프로미스이므로 async/ await 방식으로 변경 가능
@@ -617,6 +617,8 @@ formData.getAll('item'); // ['apple']
 
 * 받는 쪽에서는 decodeURIComponent를 사용함
 
+![img2](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week2/img/img2.png?raw=true)
+
 ### 데이터 속성과 dataset
 
 * 노드를 웹 서버로 사용하는 경우, 클라이언트(프론트앤드)와 빈번하게 데이터를 주고받게 됨
@@ -644,6 +646,8 @@ formData.getAll('item'); // ['apple']
     document.querySelector('li').dataset.monthSalary = 10000;
 </script>
 ```
+
+![img3](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week2/img/img3.png?raw=true)
 
 ## 2.3 함께 보면 좋은 자료
 
