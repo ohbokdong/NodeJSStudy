@@ -627,10 +627,10 @@ formData.getAll('item'); // ['apple']
   * 클라이언트(프론트앤드)에 민감한 데이터를 내려보내는 것은 위험!
   * 보안과 무관한 데이터들은 자유롭게 보내도 됨
 * JS 변수에 저장해도 되지만 HTML5에도 HTML과 관련된 데이터를 저장하는 공식적인 방법이 있음
-* 데이터 속성(Data Attribute)
+* **데이터 속성(Data Attribute)**
   * HTML 태그 속성으로 data-로 시작하는 것들을 넣는 것
   * 데이터 속성의 장점은 JS로 쉽게 접근 가능한 점
-    * data- 접두어는 사라지고 -뒤에 위치한 글자는 대문자가 됨
+    * `data-` 접두어는 사라지고 -뒤에 위치한 글자는 대문자가 됨
   * 반대로 dataset에 데이터를 넣어도 HTML 태그에 반영됨
     * dataset.monthSalary = 10000;을 넣으면 data-month-salary="10000"이라는 속성이 생김
 
