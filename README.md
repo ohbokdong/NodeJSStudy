@@ -28,7 +28,7 @@
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week2/younggeun0.md#22-%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8)
   * **4회차(2021-11-17) - 3. 노드 기능(1/2)**
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week4/sgmsgood.md)
-    * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week4/minj0i.md
+    * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week4/minj0i.md)
   * **4회차(2021-11-24) - 3. 노드 기능(2/2)**
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week5/sgmsgood.md)
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week5/minj0i.md)
