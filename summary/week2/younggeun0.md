@@ -188,7 +188,7 @@ var obj = arr[1];
 var bool = arr[3];
 
 const arr2 = ['node', {}, 10, true];
-const [node, obj, , bool] = arr2;s
+const [node, obj, , bool] = arr2;
 ```
 
 ### 클래스
