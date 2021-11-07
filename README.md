@@ -30,8 +30,8 @@
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week4/sgmsgood.md)
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week4/minj0i.md)
   * **4회차(2021-11-24) - 3. 노드 기능(2/2)**
+    * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week5/rlawjddbs.md)
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week5/sgmsgood.md)
-    * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week5/minj0i.md)
 
 ### 첫 모임 때 추가로 같이 정할 사항들
 
