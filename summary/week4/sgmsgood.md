@@ -29,8 +29,49 @@ $ node
 : 특정한 기능을 하는 함수나 변수들의 집합
 : 하나의 프로그램이면서 다른 프로그램의 부품으로도 사용할 수 있음 (재활용성)
 : 파일 하나 -> 모듈 하나
+: **module.exports = 담고싶은 객체, 함수, 변수**
+![](https://images.velog.io/images/developerelen/post/5555e4d6-934c-4129-90ce-020bef0d9155/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-11-17%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.15.48.png)
+<var.js>
+```js
+const odd = '홀수입니다.';
+const even = '짝수입니다.';
 
+module.exports = {
+    odd, 
+    even,
+}
+```
+<func.js>
+```js
+// 1. 불러올 모듈의 경로를 require() 함수에 집어넣습니다.
+const { odd, even } = require('./var');
 
+function checkOddOrEven(num) {
+    if (num % 2) {
+        return odd;
+    }
+ 
+    return even;
+}
+
+module.exports = checkOddOrEven;
+```
+<index.js>
+```js
+const { odd, even } = require('./var');
+const checkNumber = require('./func');
+
+function checkStringOddOrEven(str) {
+    if(str.length % 2) {
+        return odd;
+    }
+    return even;
+}
+
+console.log(checkNumber(10));
+console.log(checkStringOddOrEven('hello'));
+```
+![](https://images.velog.io/images/developerelen/post/957dbef8-f260-44f7-98e2-81a1417e689d/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-11-17%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.24.24.png)
 # 3. 노드 내장 객체
 ## 3-1). global (전역객체)
 1) window와 같은 전역 객체 (모든 파일에서 접근 가능)
@@ -612,3 +653,5 @@ console.log('querystring.stringify():', querystring.stringify(query));
 // (결과값)
 //querystring.stringify():page=3&limit=10&category=nodejs&category=javascript
 ```
+
+출처: Node.js 교과서 - 길벗
