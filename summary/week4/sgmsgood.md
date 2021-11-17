@@ -498,8 +498,8 @@ console.log('os.totalmem(): ', os.totalmem());
 ### 4-2-4) path.extname(경로)
 : 파일의 확장자
 ### 4-2-5) path.basename(경로, 확장자)
-: 파일의 이름(확장자 포함)
-: 파일의 이름만 표시하고 싶을 경우, basename의 두 번째 인수로 파일의 확장자를 넣으면 편함
+* 파일의 이름(확장자 포함)
+* 파일의 이름만 표시하고 싶을 경우, basename의 두 번째 인수로 파일의 확장자를 넣으면 편함
 ( 예: path.basename(path, path.extname(path)) )
 ### 4-2-6) path.parse(경로)
 : 파일 경로를 root, dir, base, ext, name으로 분리
@@ -514,8 +514,8 @@ console.log('os.totalmem(): ', os.totalmem());
 ### 4-2-11) path.join(경로, ...)
 : 여러 인수를 넣으면 하나의 경로로 합침
 ### 4-2-12) path.resolve(경로, ...)
-: path.join()과 비슷하지만 차이가 있음. 
-: /를 만날 시
+* path.join()과 비슷하지만 차이가 있음. 
+* /를 만날 시
 * path.resolve: 절대 경로로 인식해서 앞의 경로 무시
 * path.join: 상대 경로로 처리
 ```js
