@@ -26,10 +26,10 @@ $ node
 > 노드는 코드를 모듈로 만들수 있다는 점에서 자바스크립트와 다릅니다. 
 
 ## 모듈
-: 특정한 기능을 하는 함수나 변수들의 집합
-: 하나의 프로그램이면서 다른 프로그램의 부품으로도 사용할 수 있음 (재활용성)
-: 파일 하나 -> 모듈 하나
-: **module.exports = 담고싶은 객체, 함수, 변수**
+* 특정한 기능을 하는 함수나 변수들의 집합
+* 하나의 프로그램이면서 다른 프로그램의 부품으로도 사용할 수 있음 (재활용성)
+* 파일 하나 -> 모듈 하나
+* **module.exports = 담고싶은 객체, 함수, 변수**
 ![](https://images.velog.io/images/developerelen/post/5555e4d6-934c-4129-90ce-020bef0d9155/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-11-17%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.15.48.png)
 <var.js>
 ```js
@@ -238,10 +238,10 @@ whatIsThis();
 
 ## 3-5-3) require
 ### require.cache / require.main
-: require = 함수 = 객체
-: require가 반드시 파일 최상단에 위치할 필요가 없고, module.exports도 최하단에 위치할 필요가 없음
-: 한 번 require한 파일은 require.cache에 저장되므로 다음 번에 require할 때에는 새로 불러오지 않고 require.cache에 있는 것이 재사용됨
-: require.main은 노드 실행 시 첫 모듈 (아래 코드에서는 '/Users/dev/node/session 3/require.js')
+* require = 함수 = 객체
+* require가 반드시 파일 최상단에 위치할 필요가 없고, module.exports도 최하단에 위치할 필요가 없음
+* 한 번 require한 파일은 require.cache에 저장되므로 다음 번에 require할 때에는 새로 불러오지 않고 require.cache에 있는 것이 재사용됨
+* require.main은 노드 실행 시 첫 모듈 (아래 코드에서는 '/Users/dev/node/session 3/require.js')
 
 1. require.cache
 ```js
@@ -309,8 +309,8 @@ true
 ```
 
 ### require로 순환 참조(circular dependency)될 경우
-: 2개 이상의 파일에서 서로를 참조할 경우, 순환 참조 되는 대상을 빈 객체로 만듦
-: 에러가 떨어지지 않고 빈 객체로 바꾸므로 순환 참조 되지 않도록 신경써야 함!
+* 2개 이상의 파일에서 서로를 참조할 경우, 순환 참조 되는 대상을 빈 객체로 만듦
+* 에러가 떨어지지 않고 빈 객체로 바꾸므로 순환 참조 되지 않도록 신경써야 함!
 
 1. dep1.js
 ```js
@@ -347,9 +347,9 @@ dep1 {}
 ```
 
 ## 3-6. process
-: process 객체는 현재 실행되고 있는 노드 프로세스에 대한 정보를 담고 있음
+* process 객체는 현재 실행되고 있는 노드 프로세스에 대한 정보를 담고 있음
 ### 3-6-1) process.version
-: 설치된 노드의 버전 확인
+* 설치된 노드의 버전 확인
 ```js
 > process.version
 'v16.13.0'
@@ -397,16 +397,16 @@ dep1 {}
 { user: 361297, system: 146418 }
 ```
 ### 3-6-9) process.env
-: 환경 변수 출력 및 임의 저장 가능
-: 서비스의 중요한 키를 저장하는 공간으로도 사용됨 (서버, 데이터베이스의 비밀번호 및 각종 API키 등)
-: 서비스 키를 넣는 방법은 운영체제마다 차이가 있으나, detenv를 사용할 경우 모든 운영체제에 동일하게 넣을 수 있는 방법이 있음
+* 환경 변수 출력 및 임의 저장 가능
+* 서비스의 중요한 키를 저장하는 공간으로도 사용됨 (서버, 데이터베이스의 비밀번호 및 각종 API키 등)
+* 서비스 키를 넣는 방법은 운영체제마다 차이가 있으나, detenv를 사용할 경우 모든 운영체제에 동일하게 넣을 수 있는 방법이 있음
 ```js
 const secretId = process.env.SECRET_ID;
 const secretCode = process.env.SECRET_CODE;
 ```
 ### 3-6-10) process.nextTick(콜백)
-: 이벤트 루프가 다른 콜백 함수들보다 nextTick의 콜백 함수를 우선으로 처리하도록 만듦
-: process.nextTick과 Promise를 마이크로태스크 (microtask)라고 부름
+* 이벤트 루프가 다른 콜백 함수들보다 nextTick의 콜백 함수를 우선으로 처리하도록 만듦
+* process.nextTick과 Promise를 마이크로태스크 (microtask)라고 부름
 ```js
 setImmediate(() => {
     console.log('immediate');
