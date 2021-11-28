@@ -32,7 +32,7 @@
   * **4회차(2021-11-28) - 3. 노드 기능(2/2)**
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week5/rlawjddbs.md)
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week5/sgmsgood.md)
-  * **5회차(2021-11-05) - 4. http 모듈로 서버 만들기**
+  * **5회차(2021-12-05) - 4. http 모듈로 서버 만들기**
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week6/ch.choi.md)
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week6/rlawjddbs.md)
   * **6회차(2021-?-?) - 5. 패키지 매니저**
