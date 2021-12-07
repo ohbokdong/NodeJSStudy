@@ -35,7 +35,7 @@
   * **5회차(2021-12-05) - 4. http 모듈로 서버 만들기**
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week6/ch.choi.md)
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week6/rlawjddbs.md)
-  * **6회차(2021-?-?) - 5. 패키지 매니저**
+  * **6회차(2021-12-12) - 5. 패키지 매니저**
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week7/younggeun0.md)
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week7/ch.choi.md)
   * **7회차(2021-?-?) - 6. 익스프레스 웹 서버 만들기**
