@@ -138,10 +138,6 @@ http.createServer((req, res) => {
             <td>설정 시 자바스크립트에서 쿠키에 접근 불가능. 쿠키 조작 방지</td>
         </tr>
         <tr>
-            <td>HttpOnly</td>
-            <td>설정 시 자바스크립트에서 쿠키에 접근 불가능. 쿠키 조작 방지</td>
-        </tr>
-        <tr>
             <td>session</td>
             <td>세션 생성</td>
         </tr>
