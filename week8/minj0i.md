@@ -251,3 +251,168 @@ app.use((req, res, next) => {
   morgan('dev')(req, res, next);
 });
 ```
+
+### **6.2.7 multer**
+멀티파트 형식이란 enctype이 multipart/form-data인 폼을 통해 업로드하는 데이터의 형식
+```html
+<!-- multipart.html -->
+<form action="/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="image" />
+  <input type="text" name="title" />
+  <button type="submit">업로드</button>
+</form>
+```
+```
+npm i multer
+```
+```JS
+const multer = require('multer');
+
+const upload = multer({
+  // storage
+  storage: multer.diskStorage({
+    // 어디에
+    destination(req, file, done) {
+      done(null, 'uploads/');
+    },
+    // 어떤 이름으로
+    filename(req, file, done) {
+      const ext = path.extname(file.originalname);
+      done(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    },
+  }),
+  // 업로드에 대한 제한 사항 설정
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
+```
+위 설정을 실제로 사용하려면 서버에 uploads폴더가 존재해야 함
+- 파일 하나: upload.single(s)
+```JS
+const fs = require('fs');
+
+try {
+  fs.readdirSync('uploads');
+} catch (error) {
+  console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
+  fs.mkdirSync('uploads');
+}
+
+app.post('/upload', upload.single('image'), (req, res) => { 
+  console.log(req.file, req.body); 
+  // req.file - 업로드 성공 시 결과
+  // req.body - 파일이 아닌 데이터인 title이 들어 있음
+  res.send('ok'); 
+});
+```
+- 파일 여러개: upload.array()
+  - 결과도 req.files 배열에 들어가 있음
+  - 데이터의 키가 다른 경우는 아래 처럼
+```JS
+app.post('/upload',
+  upload.fields([{ name: 'image1' }, { name: 'image2' }]),
+  (req, res) => {
+    console.log(req.files, req.body);
+    res.send('ok');
+  },
+);
+```
+- 파일을 업로드하지 않고 멀티파트 형식으로 업로드하는 경우: upload.none()
+  - 파일을 업로드하지 않았으므로 req.body만 존재
+
+![multer미들웨어](https://thebook.io/img/080229/249.jpg)
+
+
+실습코드는 다 해보셨죠?^_^
+
+## 6.3 Router 객체로 라우팅 분리하기
+익스프레스는 라우팅을 깔끔하게 관리할 수 있다   
+routes 폴더를 만들고 그 안에 index.js, user.js를 작성
+```JS
+// routes/index.js
+const express = require('express');
+
+const router = express.Router();
+
+// GET / 라우터
+router.get('/', (req, res) => {
+  res.send('Hello, Express');
+});
+
+module.exports = router;
+```
+```JS
+// routes/user.js
+const express = require('express');
+
+const router = express.Router();
+
+// GET /user 라우터
+router.get('/', (req, res) => {
+  res.send('Hello, User');
+});
+
+module.exports = router;
+```
+```JS
+// app.js
+...
+const path = require('path');
+
+dotenv.config();
+const indexRouter = require('./routes'); // == './routes/index.js'
+const userRouter = require('./routes/user');
+...
+  name: 'session-cookie',
+}));
+
+app.use('/', indexRouter);
+app.use('/user', userRouter);
+
+app.use((req, res, next) => {
+  res.status(404).send('Not Found');
+});
+
+app.use((err, req, res, next) => {
+...
+```
+
+아래 코드는 next('route')에서 해당 라우터를 찾아가서 그 미들웨어만 실행함
+```JS
+router.get('/', function(req, res, next) {
+  next('route');
+}, function(req, res, next) {
+  console.log('실행되지 않습니다');
+  next();
+}, function(req, res, next) {
+  console.log('실행되지 않습니다');
+  next();
+});
+router.get('/', function(req, res) {
+  console.log('실행됩니다');
+  res.send('Hello, Express');
+});
+```
+
+> 라우트 매개변수
+
+router.get('/user/:id') 식으로 쓸 수 있음. 단 일반 라우터 뒤에 위치해야 함   
+`/users/123?limit=5&skip=10`처럼 주소에 쿼리스트링을 쓰는 경우   
+{id: '123'} {limit: '5', skip: '10'}   
+
+미들웨어가 존재하지 않아도 익스프레스가 자체적으로 404에러를 처리해주기도 하지만 연결해주는 게 좋다
+```JS
+app.use((req, res, next) => {
+  res.status(404).send('Not Found');
+});
+```
+
+관련있는 코드는 묶는게 보기 좋음
+```JS
+router.route('/abc')
+  .get((req, res) => {
+    res.send('GET /abc');
+  })
+  .post((req, res) => {
+    res.send('POST /abc');
+  });
+```
