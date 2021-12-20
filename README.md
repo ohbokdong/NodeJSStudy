@@ -41,10 +41,10 @@
   * **8회차(2021-12-19) - 6. 익스프레스 웹 서버 만들기(1/2)**
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week8/minj0i.md)
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week8/younggeun0.md)
-  * **9회차(2021-?-?) - 6. 익스프레스 웹 서버 만들기(2/2)**
+  * **9회차(2021-01-09) - 6. 익스프레스 웹 서버 만들기(2/2)**
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week9/sgmsgood.md)
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week9/minj0i.md)
-  * **10회차(2021-?-?) - 7. MySQL**
+  * **10회차(2021-01-09) - 7. MySQL**
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week10/rlawjddbs.md)
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week10/sgmsgood.md)
   * **11회차(2021-?-?) - 8. 몽고디비**
