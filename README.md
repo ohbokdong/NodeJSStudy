@@ -41,37 +41,37 @@
   * **8회차(2021-12-19) - 6. 익스프레스 웹 서버 만들기(1/2)**
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week8/minj0i.md)
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week8/younggeun0.md)
-  * **9회차(2021-01-09) - 6. 익스프레스 웹 서버 만들기(2/2)**
+  * **9회차(2022-01-09) - 6. 익스프레스 웹 서버 만들기(2/2)**
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week9/sgmsgood.md)
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week9/minj0i.md)
-  * **10회차(2021-01-09) - 7. MySQL**
+  * **10회차(2022-01-09) - 7. MySQL**
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week10/rlawjddbs.md)
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week10/sgmsgood.md)
-  * **11회차(2021-?-?) - 8. 몽고디비**
+  * **11회차(2022-?-?) - 8. 몽고디비**
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week11/ch.choi.md)
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week11/rlawjddbs.md)
-  * **12회차(2021-?-?) - 9. 익스프레스로 SNS 서비스 만들기**
+  * **12회차(2022-?-?) - 9. 익스프레스로 SNS 서비스 만들기**
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/younggeun0.md)
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/ch.choi.md)
-  * **13회차(2021-?-?) - 10. 웹 API 서버 만들기**
+  * **13회차(2022-?-?) - 10. 웹 API 서버 만들기**
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week13/minj0i.md)
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week13/younggeun0.md)
-  * **14회차(2021-?-?) - 11. 노드 서비스 테스트하기**
+  * **14회차(2022-?-?) - 11. 노드 서비스 테스트하기**
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week14/sgmsgood.md)
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week14/minj0i.md)
-  * **15회차(2021-?-?) - 12. 웹 소켓으로 실시간 데이터 전송하기**
+  * **15회차(2022-?-?) - 12. 웹 소켓으로 실시간 데이터 전송하기**
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week15/rlawjddbs.md)
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week15/sgmsgood.md)
-  * **16회차(2021-?-?) - 13. 실시간 경매 시스템 만들기**
+  * **16회차(2022-?-?) - 13. 실시간 경매 시스템 만들기**
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week16/ch.choi.md)
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week16/rlawjddbs.md)
-  * **17회차(2021-?-?) - 14. CLI 프로그램 만들기**
+  * **17회차(2022-?-?) - 14. CLI 프로그램 만들기**
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week17/younggeun0.md)
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week17/ch.choi.md)
-  * **18회차(2021-?-?) - 15. AWS와 GCP로 배포하기**
+  * **18회차(2022-?-?) - 15. AWS와 GCP로 배포하기**
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week18/minj0i.md)
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week18/younggeun0.md)
-  * **19회차(2021-?-?) - 16. 서버리스 노드 개발**
+  * **19회차(2022-?-?) - 16. 서버리스 노드 개발**
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week19/sgmsgood.md)
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week19/minj0i.md)
 ### 첫 모임 때 추가로 같이 정할 사항들
