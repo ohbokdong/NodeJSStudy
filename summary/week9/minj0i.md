@@ -43,7 +43,7 @@ res
 템플릿 엔진은 자바스크립트를 사용해서 HTML을 렌더링  
 대표적인 템플릿 엔진인 퍼그(Pug)와 넌적스(Nunjucks)
 
-### 6.5.1. 퍼그(제이드)
+### 6.5.1 퍼그(제이드)
 
 흠 개인적으로 쓰는 거 첨 봄
 
@@ -68,4 +68,48 @@ app.use(morgan('dev'));
 - `"`: &quot;
 - `'`: &apos;
 
-### 6.5.2. 넌적스
+### 6.5.2 넌적스
+
+넌적스는 퍼그의 HTML 문법 변화에 적응하기 힘든 분에게 적합한 템플릿 엔진이며, 파이어폭스를 만든 모질라에서 만듬  
+파이썬의 템플릿 엔진인 Twig와 문법이 상당히 유사하다
+
+이것도 개인적으로 처음 보았습니다..ㅎㅎ
+
+### 6.5.3 에러 처리 미들웨어
+
+```JS
+// app.js
+
+...
+app.use((req, res, next) => {
+  const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
+  error.status = 404;
+  next(error);
+});
+
+app.use((err, req, res, next) => {
+  res.locals.message = err.message;
+  res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
+  res.status(err.status || 500);
+  res.render('error');
+});
+...
+
+```
+
+error 객체의 스택 트레이스(error.html의 error.stack)는 시스템 환경(process.env.NODE_ENV)이 production(배포 환경)이 아닌 경우에만 표시됨  
+=> 배포 환경인 경우에는 에러 메시지만 표시됩니다. 에러 스택 트레이스가 노출되면 보안에 취약할 수 있기 때문
+
+### 6.6 함께 보면 좋은 자료
+
+Express 공식 홈페이지: http://expressjs.com
+
+- 퍼그 공식 홈페이지: https://pugjs.org
+- 넌적스 공식 홈페이지: https://mozilla.github.io/nunjucks
+- morgan: https://github.com/expressjs/morgan
+- body-parser: https://github.com/expressjs/body-parser
+- cookie-parser: https://github.com/expressjs/cookie-parser
+- static: https://github.com/expressjs/serve-static
+- express-session: https://github.com/expressjs/session
+- multer: https://github.com/expressjs/multer
+- dotenv: https://github.com/motdotla/dotenv
