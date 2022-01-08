@@ -397,19 +397,15 @@ module.exports = class Comment extends Sequelize.Model {
 
 #### 7.6.2.2. super.init 메서드의 두 번째 인자 옵션
 
-- **sequelize**: `satic init` 메서드의 매개변수와 연결되는 옵션으로 db.sequelize 객체를
-  넣어야 함
-- **timestamp**: `true` 설정 시 시퀄라이즈는 `createdAt`과 `updatedAt` 컬럼을 추가하며 
-  `row`의 추가 및 수정 시각이 자동으로 입력됨 
-- **underscored**: 시퀄라이즈는 기본적으로 테이블명, 컬럼명을 `camel_case(낙타체)`로 바꾸는데,
-  본 속성을 true로 설정하면 이를 `snake_case(underscore_case)`로 바꿈
-- **modelName**: 모델 이름을 설정할 수 있음. 노드 프로젝트에서 사용함. 
-- **tableName**: 실제 데이터베이스의 테이블 이름 설정. 
-- **paranoid**: `true` 설정 시 `deletedAt` 컬럼을 추가하며 `row` 삭제 시 완전히
-  지워지지 않고 deletedAt에 지운 시각이 기록됨. row 조회 시 deletedAt의 값이 `null`인
-  row를 조회함
-- **charset, collate**: 각각 `utf8`과 `utf8_general_ci`로 설정해야 한글이 입력됨.
-  `이모티콘`까지 입력할 수 있게 하고 싶으면 `utf8mb4`, `utf8mb4_general_ci` 입력
+|속성|설명|
+|---|---|
+|**sequelize**|`satic init` 메서드의 매개변수와 연결되는 옵션으로 db.sequelize 객체를 넣어야 함|
+|**timestamp**|`true` 설정 시 시퀄라이즈는 `createdAt`과 `updatedAt` 컬럼을 추가하며 `row`의 추가 및 수정 시각이 자동으로 입력됨 |
+|**underscored**|시퀄라이즈는 기본적으로 테이블명, 컬럼명을 `camel_case(낙타체)`로 바꾸는데, 본 속성을 true로 설정하면 이를 `snake_case(underscore_case)`로 바꿈|
+|**modelName**|모델 이름을 설정할 수 있음. 노드 프로젝트에서 사용함|
+|**tableName**|실제 데이터베이스의 테이블 이름 설정|
+|**paranoid**|`true` 설정 시 `deletedAt` 컬럼을 추가하며 `row` 삭제 시 완전히 지워지지 않고 deletedAt에 지운 시각이 기록됨. row 조회 시 deletedAt의 값이 `null`인 row를 조회함|
+|**charset, collate**|각각 `utf8`과 `utf8_general_ci`로 설정해야 한글이 입력됨. `이모티콘`까지 입력할 수 있게 하고 싶으면 `utf8mb4`, `utf8mb4_general_ci` 입력|
 
 ### 7.6.3. 관계 정의하기
 
@@ -507,11 +503,11 @@ db.hashtag.belongsToMany(db.Post, {through: 'PostHashtag'});
 - 시퀄라이즈로 CRUD 작업을 하려면 먼저 시퀄라이즈 쿼리를 알아야 함
 - 각 쿼리는 `프로미스`를 반환하므로 `then`을 붙여 `결과값`을 받을 수 있음
 
+<details>
+    <summary>JPA같은 시퀄라이즈</summary>
+
 ```js
-/**
- * INSERT INTO nodejs.users (name, age, married, comment)
- * VALUES ('zero', 24, 0, '자기소개1')
- */
+// INSERT INTO nodejs.users (name, age, married, comment) VALUES ('zero', 24, 0, '자기소개1')
 const { User } = require('../models');
 User.create({
     name: 'zero',
@@ -519,9 +515,148 @@ User.create({
     married: false,
     comment: '자기소개1'
 });
+
+// SELECT * FROM nodejs.users;
+User.findAll({});
+
+// SELECT * FROM nodejs.users LIMIT 1;
+User.findOne({});
+
+// SELECT name, married FROM nodejs.users;
+User.findAll({
+    attributes: ['name', 'married']
+});
+
+// SELECT name, age FROM nodejs.users WHERE married = 1 AND age > 30;
+const { Op } = require('sequelize'); // 시퀄라이즈에서 제공하는 연산자 모듈
+const { User } = require('../models');
+User.findAll({
+    attributes: ['name', 'age'],
+    where: {
+        married: true,
+        age: { [Op.gt]: 30 } // greater than
+    }
+});
+
+// SELECT id, name FROM users WHERE married = 0 OR age > 30;
+const { Op } = require('sequelize');
+const { User } = require('../models');
+User.findAll({
+    attributes: ['id', 'name'],
+    where: {
+        [Op.or]: [{ married: false }, { age: { [Op.gt]: 30 } }]  
+    }
+});
+
+// SELECT id, name FROM users ORDER BY age DESC;
+User.findAll({
+    attribute: ['id', 'name'],
+    order: [['age', 'DESC']] 
+});
+
+// SELECT id, name FROM users ORDER BY age DESC LIMIT 1;
+User.findAll({
+    attributes: ['id', 'name'],
+    order: [['age', 'DESC']],
+    limit: 1
+});
+
+// SELECT id, name FROM users ORDER BY age DESC LIMIT 1 OFFSET 1;
+User.findAll({
+    attributes: ['id', 'name'],
+    order: ['age', 'DESC'],
+    limit: 1,
+    offset: 1
+});
+
+// UPDATE nodejs.users SET comment = '바꿀 내용' WHERE id = 2;
+User.update({
+    comment: '바꿀 내용'
+}, {
+    where: { id: 2 }
+});
+
+// DELETE FROM nodejs.users WHEREid = 2;
+User.destroy({
+    where: { id: 2 }
+})
 ```
 
+> ### 주의
+> - MySQL은 undefined 자료형을 지원하지 않으므로 where 옵션에는 undefined가 들어가면 안 됨
 
+</details>
+
+#### 7.6.4.1. 관계 쿼리
+
+- `findOne`이나 `findAll` 메서드를 호출할 때 프로미스의 결과로 모델을 반환함(findAll은 배열로 반환)
+- 관계 쿼리란 `JOIN` 기능을 말함
+- User 모델은 Comment 모델과 hasMany-belongTo 관계가 맺어져 있으며
+  특정 사용자를 가져오면서 그 사람의 댓글까지 모두 가져오고 싶다면 include 속성을 사용하면 됨
+
+```js
+const user = await User.findOne({
+    include: [{
+        model: Comment
+    }]
+});
+console.log(user.Comments); // 헐
+
+// 또 다른 방법
+const user = await User.findOne({});
+const comments = await user.getComments();
+console.log(comments);
+```
+
+- 댓글은 여러 개일 수 있으므로(`hasMany`) `user.Comments`로 접근 가능
+- 관계를 설정했다면 `setComments(수정)`, `addComment(하나 생성)`, `addComments(여러 개 생성)`,
+  `removeComments(삭제)` 메서드를 지원함. 동사 뒤에 모델명이 붙는 형식
+> - 동사 뒤에 모델 이름을 바꾸고 싶다면 관계 설정 시 as 옵션 사용 가능
+> ```js
+> // 관계를 설정할 때 as로 등록
+> db.User.hasMany(db.Comment, { 
+>     foreignKey: 'commenter', sourceKey: 'id', as: 'Answers' 
+> });
+> ```
+> - as를 설정하면 include 시 추가되는 댓글 객체도 `user.Answers`로 바뀜
+
+> - include, 관계 쿼리 메서드에도 `where`, `attributes` 같은 옵션 사용 가능
+> ```js
+> const user = await User.findOne({
+>     include: [
+>         model: Comment,
+>         where: {
+>             id: 1
+>         },
+>         attributes: ['id']
+>     ]
+> });
+> // 또는
+> const comments = await user.getComments({
+>     where: {
+>         id: 1
+>     },
+>     attributes: ['id']
+> })
+> ```
+> 
+> - 관계 쿼리 시 조회는 위와 같이 하지만 수정, 생성, 삭제는 다른점이 있음
+> ```js
+> const user = await User.findOne({});
+> const comment = await Comment.create();
+> await user.addComment(comment);
+> // 또는
+> await user.addComment(comment.id);
+> await user.addComments([...]); // 여러 개를 추가할 때는 배열로 추가할 수 있음
+> ```
+> - 관계 쿼리 메서드의 인수로 추가할 댓글 모델을 넣거나 댓글의 아이디를 넣으면 됨
+
+#### 7.5.4.2. SQL 쿼리하기
+
+```js
+const [result, metadata] = await sequelize.query('SELECT * FROM comments');
+console.log(result);
+```
 
 ------
 
