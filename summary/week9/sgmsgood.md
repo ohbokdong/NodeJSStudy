@@ -81,6 +81,10 @@ router.get('/', fuction(req, res, next) {
 ```
 
 **1. 변수 사용 방법**
+* 태그= 변수 입력
+* 텍스트 중간에 변수 입력: #{변수}
+* #{} 내부와 = 기호 뒷부분은 자바스크립트로 해석 -> input 태그의 경우처럼 자바스크립트 구문을 써도 됨 
+
 **퍼그**
 ```js
 h1= title
@@ -88,10 +92,24 @@ p Welcome to ${title}
 button(class=title, type='submit') 전송
 input(placeholder=title + '연습')
 ```
-
+**HTML**
 ```HTML
 <h1>Express</h1>
 <p>Welcome to express</p>
 <button class="Express" type="submit">전송</button>
 <input placeholder="Express 연습"/>
 ```
+
+* 내부에 직접 변수 선언 가능: 빼기 (-)이용
+
+**퍼그**
+```js
+- const node = 'Node.js'
+- const js = 'Javascript'
+p #{node}와 #{js}
+```
+**HTML**
+<p>Node.js와 Javascript</p>
+
+# 넌적스
+> 퍼그의 HTML 문법 변화에 적응하기 힘든 사람에게 적합한 템플릿이며, 파이어폭스를 만든 모질라에서 만듦. HTML 문법을 그대로 사용하되 추가로 자바스크립트 문법을 사용할 수 있고, 파이썬 템플릿 엔진인 Twig와 문법이 상당히 유사함
