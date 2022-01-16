@@ -18,7 +18,7 @@
 *위 NoSQL은 몽고 디비의 특징임으로 다른 데이터 베이스와 차이가 있을 수 있음
 
 NoSQL은 고정된 데이블이 없음  
-대신 테이블에 상응하는 컬렉션이라는 개념이 있지만 컬럼을 따로 정의 하자 읺음
+대신 테이블에 상응하는 컬렉션이라는 개념이 있지만 컬럼을 따로 정의 하자 않음
 
 MySQL은 users 테이블을 만들 때 name, age, married 등의 컬럼과 자료형, 옵션을 정의 하지만
 mongoDB는 그냥 users 컬랙션을 맏들고 끝. 컬렉션에는 어떤 데이터든 들어 갈 수 있음
@@ -29,8 +29,14 @@ mongoDB는 MySQL과 달리 JOIN기능이 없음
 [MySQL JOIN의 이해](https://yoo-hyeok.tistory.com/98)
 
 동시에 쿼리를 수행하는 경우 쿼리가 섞여 예상치 못한 결과를 낼 가능성이 있는 것이 단점
+mongoDB의 장단점
 
-단점에도 불과하고 사용하는 이유는 확장성과 가용성 때문
+장점
+- 확장성과 가용성이 좋음
+
+단점
+- 동시에 쿼리 수행 시 쿼가 섞여 예상치 못한 결과를 낼 가능성이 있음
+
 
 데이터의 일관성을 보장해주는 기능이 약하지만 데이터를 빠르게 넣을 수 있고 쉽게 여러 서버에 데이터를 분산할 수 있음
 
@@ -61,22 +67,21 @@ mongoDB는 MySQL과 달리 JOIN기능이 없음
 |명령어|행동| 비고|
 |------|------|------|
 |use __[데이터베이스 명]__|데이터 베이스 만드는 명령||
-|show dbs|데이터베이스 목록을 확인|데이터가 있어요 db에 보임|
+|show dbs|데이터베이스 목록을 확인|데이터가 있어야 db에 보임|
 |db|현재 사용 중인 데이터 베이스를 확인||
 
-[이미지]
+____
 
-
-컬렉션 만들기 
+__컬렉션 만들기__ 
 |명령어|행동| 비고|
 |------|------|------|
 |db.createCollection(__'컬렉션 명'__)|컬렉션 생성|다큐먼트를 넣으면 자동 생성됨|
-
-컬렉션 확인
+____
+__컬렉션 확인__
 |명령어|행동| 비고|
 |------|------|------|
 |show collection|생성된 컬렉션 확인||
-
+____
 ## 8.5 CRUD 작업 하기
 
 몽고디비에서 CRUD 작업을 해보자
@@ -105,12 +110,11 @@ ____
 
 ObjectID: 고유한 값을 사용해 다큐먼트를 조회 할 때 사용할 수 있음 (MySQL에서 기본 키와 비슷)
 
-다큐먼트 생성하기
-
+__다큐먼트 생성하기__
 |명령어|행동| 비고|
 |------|------|------|
 |db.__컬렉션명__.save(__다큐먼트__)|해당 컬렉션에 다큐먼트를 추가||
-
+____
 예시 
 ```java
 mongo
@@ -201,11 +205,11 @@ db.users.find(
 
 기존 데이터를 수정해보자
 
-
+__데이터 수정하기__
 |명령어|행동| 비고|
 |------|------|------|
 |db.__컬렉션명__.update({__조건__},{__수정할 객체__})|수정할 다큐먼트의 객체를 수정함||
-
+____
 update 예시
 ```java
 db.users.update(
@@ -225,14 +229,15 @@ db.users.update(
 ## 8.5.4 Delete(삭제)
 데이터 삭제를 해보자
 
+__데이터 삭제__
 |명령어|행동| 비고|
 |------|------|------|
 |db.__컬렉션명__.remove({__조건__})|조건에 해당하는 다큐먼트 삭제||
-
+____
 
 지금까지 CRUD 였습니다.
 
-노드와 연동하여 서버에서 데이터베이스를 조작할 수 있게 해야험
+노드와 연동하여 서버에서 데이터베이스를 조작할 수 있게 해야함
 
 노드와 몽고디비를 연동해주고 쿼리까지 만들어주는 라이브러리가 있음
 
@@ -258,7 +263,7 @@ MySQL에 시퀄라이즈가 있다면 mongoDB는 몽구스가 있음
 
 populate를 통해 쿼리 한 번에 데이터를 합쳐서 가져오는 것은 아니지만 작업을 직접하지 않아도 됨
 
-몽구스 패키지 설치 하기
+__몽구스 패키지 설치 하기__
 ```cmd
 npm i mongoose
 ```
@@ -282,11 +287,14 @@ const connect = () => {
         mongoose.set('debug', true); //개발 환경일때는 디버그 
     }
     //몽고디비 URL로 연결 시도
-    mongoose.connect('mongodb://이름:비밀번호@localhost:27017/admin',{
-    dbname: 'nodejs', //어떤 디비 쓸건지
-    useNewUrlParser: true, //
-    useCreateIndes: true,
-    },(error) =>{
+    mongoose.connect('mongodb://이름:비밀번호@localhost:27017/admin',
+    {
+        dbname: 'nodejs', //어떤 디비 쓸건지
+        useNewUrlParser: true, //
+        useCreateIndes: true,
+    },
+    (error) =>
+    {
         //에러 발생 시 인지하기 위한 로그 추가
         if(error) 
         {
@@ -362,7 +370,8 @@ const {schema} = mongoose;
 
 //DB 입력 처럼 스키마를 만듦
 const userSchema = new Schema({
-    name: {
+    name: 
+    {
         type: String,
         required: true, // 필수 입력값
         unique = true, //고유값이여야함
@@ -371,18 +380,18 @@ const userSchema = new Schema({
         type:Number,
         required: true,
     },
-    married:{
+    married:
+    {
         type:Boolean,
         required: true,
     },
     comment: String, //옵션 없이 간단히 선언도 가능
-    createdAt:{
+    createdAt:
+    {
         type: Date,
         default:Date.now, //기본 입력값- 데이터 생성시 시간 입력이 됨 
     },
 });
-
-
 
 module.exports = mongoose.module('User', userSchema); //model 메서드를 통해 스키마와 몽고디비의 컬렉션을 연결
 ```
