@@ -47,10 +47,10 @@
   * **10회차(2022-01-09) - 7. MySQL**
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week10/rlawjddbs.md)
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week10/sgmsgood.md)
-  * **11회차(2022-?-?) - 8. 몽고디비**
+  * **11회차(2022-01-16) - 8. 몽고디비**
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week11/ch.choi.md)
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week11/rlawjddbs.md)
-  * **12회차(2022-?-?) - 9. 익스프레스로 SNS 서비스 만들기**
+  * **12회차(2022-01-23) - 9. 익스프레스로 SNS 서비스 만들기**
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/younggeun0.md)
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/ch.choi.md)
   * **13회차(2022-?-?) - 10. 웹 API 서버 만들기**
