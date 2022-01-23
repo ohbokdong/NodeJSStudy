@@ -22,7 +22,7 @@
 2. 필요한 모듈 설치
 
 ```bash
-npm i express cookie-parser express-session morgan mlulter dotenv nunjucks sequelize mysql2 sequelize-cli
+npm i express cookie-parser express-session morgan multer dotenv nunjucks sequelize mysql2 sequelize-cli
 ```
 
 3. config, migrations, models, seeders 디렉토리 생성
@@ -200,7 +200,7 @@ router.get('/join', isNotLoggedIn, (req, res) => {
 ...
 ```
 
-6. 회원가입, 로그인, 로그아웃 라우터 작성([routes/auto.js](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/nodebird/routes/auth.js))
+6. 회원가입, 로그인, 로그아웃 라우터 작성([routes/auth.js](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/nodebird/routes/auth.js))
 7. 로컬 로그인 전략 작성([passport/localStrategy.js](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/nodebird/passport/localStrategy.js))
 
 ```js
@@ -264,7 +264,7 @@ app.use('/auth', authRouter);
 
 ### 9.4 multer 패키지로 이미지 업로드 구현하기
 
-* 이미지를 어떻게 저장할 것인지는 서비슷 특성에 따라 달라짐
+* 이미지를 어떻게 저장할 것인지는 서비스 특성에 따라 달라짐
   * 예제에선 input 태그를 통해 이미지를 선택할 때 바로 업로드를 진행하고, 업로드된 사진 주소를 클라이언트에 알림
   * 게시글을 저장할 때는 데이터베이스에 직접 이미지 데이터를 넣는 대신 이미지 경로만 저장함
 
