@@ -53,7 +53,7 @@
   * **12회차(2022-01-23) - 9. 익스프레스로 SNS 서비스 만들기**
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/younggeun0.md)
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/ch.choi.md)
-  * **13회차(2022-?-?) - 10. 웹 API 서버 만들기**
+  * **13회차(2022-02-06) - 10. 웹 API 서버 만들기**
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week13/minj0i.md)
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week13/younggeun0.md)
   * **14회차(2022-?-?) - 11. 노드 서비스 테스트하기**
