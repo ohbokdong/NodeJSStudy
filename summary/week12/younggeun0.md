@@ -10,7 +10,7 @@
 * 라우터는 `routes 폴더`에, 데이터베이스는 `models 폴더`에, html 파일은 `views 폴더`에 구분하여 저장하면 프로젝트 규모가 커져도 관리하기 쉬움
 * 데이터베이스를 구성하기 전에 데이터 간 1:1, 1:N, N:M 관계를 잘 파악해야 함
 * routes/middlewares.js처럼 라우터 내에 미들웨어를 사용할 수 있다는 것을 기억할 것
-* Passport 인증 과정과 serializeUser, deserializeUser가 언제 호출되는지 파악하고 기억해둘 것
+* Passport 인증 과정과 `serializeUser`, `deserializeUser`가 언제 호출되는지 파악하고 기억해둘 것
 * 프런트엔드 form 태그의 인코딩 방식이 multipart일 때는 multer 같은 multipart 처리용 패키지를 사용하는 것이 좋음
 
 
@@ -133,7 +133,7 @@ app.use('/', pageRouter);
     * `deserializeUser`는 매 요청 시 실행
       * passport.session 미들웨어가 이 메서드를 호출, serializeUser의 done의 두 번째 인수로 넣었던 데이터가 deserializeUser의 매개변수가 됨(여기선 사용자 id)
       * id로 DB에서 사용자 정보를 조회함
-    * `serializeUser`는 사용자 객체를 세션에 아이디로 저장, `deserializeUser`는 세션에 저장한 아이디를 통해 사용자 정보 객체를 불러오는 것
+    * **`serializeUser`는 사용자 객체를 세션에 아이디로 저장, `deserializeUser`는 세션에 저장한 아이디를 통해 사용자 정보 객체를 불러오는 것**
       * 세션에 불필요한 데이터를 담아두지 않기 위한 과정
     
 ```bash
@@ -157,13 +157,11 @@ app.use('/', pageRouter);
 
 > Passport 는 로그인 시 동작을 전략(Strategy)란 용어로 표현함
 
-### 9.3.1 로컬 로그인 구현하기
-
 * 로컬 로그인이란 자체적으로 회원가입 후 로그인 하는 것을 의미
   * `passport-local` 모듈이 필요함
   * 로컬 로그인 전략을 세워야 함, 로그인에만 해당하는 전략이므로 회원가입은 따로 만들어야 함
 
-1. 로그인 라우터 접근 권한을 제어하는 미들웨어 추가(middlewares.js)
+5. 로그인 라우터 접근 권한을 제어하는 미들웨어 추가(middlewares.js)
     * 이미 로그인한 경우 회원가입, 로그인 라우터에 접근을 막아야 함
     * 로그인하지 않은 경우, 로그아웃 라우터에 접근을 막아야 함
     * Passport는 req 객체에 isAuthenticated 메서드를 추가함 (로그인 여부 판단 가능)
@@ -202,20 +200,100 @@ router.get('/join', isNotLoggedIn, (req, res) => {
 ...
 ```
 
-2. 회원가입, 로그인, 로그아웃 라우터 작성([routes/auto.js]())
-3. 로컬 로그인 전략 작성([passport/localStrategy.js]())
+6. 회원가입, 로그인, 로그아웃 라우터 작성([routes/auto.js](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/nodebird/routes/auth.js))
+7. 로컬 로그인 전략 작성([passport/localStrategy.js](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/nodebird/passport/localStrategy.js))
 
-### 9.3.2 카카오 로그인 구현
+```js
+// routes/auth.js
+...
+router.post('/login', isNotLoggedIn, (req, res, next) => {
+  // 로컬 로그인 전략 설정
+  passport.authenticate('local', (authError, user, info) => {
+    if (authError) {
+      console.error(authError);
+      return next(authError);
+    }
+    if (!user) {
+      return res.redirect(`/?loginError=${info.message}`);
+    }
+    return req.login(user, (loginError) => {
+      if (loginError) {
+        console.error(loginError);
+        return next(loginError);
+      }
+      return res.redirect('/');
+    });
+  })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
+});
+...
+```
 
+8. 카카오 로그인 전략 작성([passport/kakaoStrategy.js](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/nodebird/passport/kakaoStrategy.js))
+    * 로컬 전략과 다른 점은 passport.authenticate 메서드에 콜백 함수를 제공하지 않는다는 점
+    * REST API 키를 [kakao developers](https://developers.kakao.com/)에서 앱 등록 후 발급받아 .env파일에 추가
+    * 앱 설정/플랫폼/Web 사이트 도메인 추가
+    * 제품 설정/카카오 로그인에서 카카오 로그인 활성화 후 RedirectURI 수정
+    * 이메일 등록을 위해 제품 설정/카카오 로그인/동의 항목에서 카카오 계정으로 정보 수집 후 제공 체크
 
+```js
+// routes/auth.js
+...
+// 카카오 로그인 전략 설정
+router.get('/kakao', passport.authenticate('kakao'));
 
+router.get('/kakao/callback', passport.authenticate('kakao', {
+  failureRedirect: '/',
+}), (req, res) => {
+  res.redirect('/');
+});
+...
+```
+
+9. auth 라우터를 app.js에 연결
+
+```js
+// app.js
+...
+const authRouter = require('./routes/auth');
+...
+
+app.use('/', pageRouter);
+app.use('/auth', authRouter);
+...
+```
 
 ### 9.4 multer 패키지로 이미지 업로드 구현하기
 
+* 이미지를 어떻게 저장할 것인지는 서비슷 특성에 따라 달라짐
+  * 예제에선 input 태그를 통해 이미지를 선택할 때 바로 업로드를 진행하고, 업로드된 사진 주소를 클라이언트에 알림
+  * 게시글을 저장할 때는 데이터베이스에 직접 이미지 데이터를 넣는 대신 이미지 경로만 저장함
+
+1. post 라우터 설정([routes/post.js](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/nodebird/routes/post.js))
+    * 예제에선 서버 디스크에 이미지를 저장하지만, 실제 서버 운영 시 서버에 문제 발생 시 이미지가 제공되지 않거나 손실될 수 있으므로 AWS S3나 클라우드 스토리지(Cloud Storage) 같은 정적 파일 제공 서비스를 사용하여 이미지를 따로 저장하고 제공하는 것이 좋음
+
+2. 게시글 작성 기능이 추가돼 메인 페이지 로딩 시 메인 페이지와 게시글을 함께 로딩하도록 수정([routes/page.js](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/nodebird/routes/page.js))
+
 ### 9.5 프로젝트 마무리하기
 
-### 9.5.1 스스로 해보기(skip)
+1. 다른 사용자를 팔로우하는 기능 추가([routes/user.js](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/nodebird/routes/user.js))
+2. 사용자 정보를 불러올 때 팔로워와 팔로잉 목록도 같이 불러오기 위해 deserializeUser를 조작([passport/index.js](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/nodebird/passport/index.js))
+    * include에서 계속 attributes를 지정하는 이유는 실수로 비밀번호 조회하는걸 막기 위함
+    * deserializeUser 캐싱하기
+      * 라우터가 실행되기 전에 deserializeUser가 먼저 실행됨, 따라서 모든 요청이 들어올 때마다 매번 사용자 정보를 조회하게 돼 DB에 부담이 될 수 있음
+      * 따라서 사용자 정보가 빈번하게 바뀌는 것이 아니면 캐싱해두는 것이 좋음
+        * 캐싱하는 동안 팔로워와 팔로잉 정보는 갱신되지 않음
+        * 캐싱 시간은 서비스 정책에 따라 조절해야 함
+      * 실제 서비스에서는 메모리에 캐싱하기보다는 레디스 같은 데이터베이스에 사용자 정보를 캐싱함
+3. 팔로잉/팔로워 숫자와 팔로우 버튼을 표시([routes/page.js](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week12/nodebird/routes/page.js))
 
+4. 해시태그로 조회하는 /hashtag 라우터 추가
+5. routes/post.js, routes/user.js를 app.js에 연결, 업로드한 이미지를 제공할 라우터도 express.static 미들웨어로 uploads 폴더와 연결해 사진들은 uploads 폴더 내 사진들이 /img 주소로 제공됨
+
+```js
+app.use('/img', express.static(path.join(__dirname, 'uploads')));
+```
+
+### 9.5.1 스스로 해보기(skip)
 
 ## 함께 보면 좋은 자료
 
