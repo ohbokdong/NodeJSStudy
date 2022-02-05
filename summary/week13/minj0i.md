@@ -71,3 +71,12 @@ passport.authenticate('local', { session: false}, (authError, user, info) => {
 ```
 클라이언트에서 JWT를 사용하고 싶다면 RSA 같은 양방향 비대칭 암호화 알고리즘을 사용하면 됨
 
+### 10.4 다른 서비스에서 호출하기
+API를 사용하는 서비스도 만들어 보자(Nodecat): nodebird-api를 통해 데이터를 가져오는 것
+
+- /.env : 발급받은 clientSecret 키를 .env에 넣는다
+- routes/index.js
+  - get /test 라우터는 NodeCat 서비스가 토큰 인증 과정을 테스트해보는 라우터
+  - 요청이 왔다 -> 세션에 발급받은 토큰이 저장되어있지 않다? -> POST :8002/v1/token 라우터로부터 토큰 발급 (HTTP 요청의 본문에 클라이언트 비밀 키를 실어 보냄) -> 발급 성공 시 GET :8002/v1/test 접근하여 토큰 유효한지 테스트 (JWT 토큰을 요청 대신 authorization 헤더에 넣는다)
+
+- localohst:4000/test 접속 => NodeCat
