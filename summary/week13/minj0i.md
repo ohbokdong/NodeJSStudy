@@ -53,4 +53,21 @@ npm i jsonwebtoken
   - 성공 시 토큰 내용 반환 후 req.decoded에 저장: 사용자 아이디, 닉네임, 발급자, 유효 기간
 - routes/v1.js
   - 토큰 발급 라우터(POST /v1/token), 토큰 테스트 라우터(GET /v1/test)
-  
+  - 한 번 버전이 정해지면 함부로 수정하면 안됨, 사용자가 이미 존재하기 때문
+  - POST /v1/token에서 클라이언트 비밀 키로 도메인 등록된 건지 아닌지 먼저 확인
+  - GET /v1/test 는 검증 성공 시 토큰 내용물을 응답으로 보냄
+  - JSON 형태에 code, message 속성이 존재하고, 토큰이 있는 경우 token 속성이 존재
+- app.js
+  - 라우터를 서버에 연결
+
+***JWT***   
+세션을 사용하지 않고 로그인 할 수 있기 때문에 최근 로그인에 많이 사용하고 있음   
+로그인 완료 시 세션에 데이터를 저장하고 세션 쿠키를 발급하는 대신 JWT 토큰을 쿠키로 발급하면 되기 때문에.   
+```JS
+// session을 사용하지 않을 수 있음
+passport.authenticate('local', { session: false}, (authError, user, info) => {
+
+})
+```
+클라이언트에서 JWT를 사용하고 싶다면 RSA 같은 양방향 비대칭 암호화 알고리즘을 사용하면 됨
+
