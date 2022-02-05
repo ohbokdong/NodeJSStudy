@@ -80,7 +80,7 @@ passport.authenticate('local', { session: false}, (authError, user, info) => {
 
 클라이언트에서 JWT를 사용하고 싶다면 RSA 같은 양방향 비대칭 암호화 알고리즘을 사용하면 됨
 
-### 10.4 다른 서비스에서 호출하기
+## 10.4 다른 서비스에서 호출하기
 
 API를 사용하는 서비스도 만들어 보자(Nodecat): nodebird-api를 통해 데이터를 가져오는 것
 
@@ -92,7 +92,7 @@ API를 사용하는 서비스도 만들어 보자(Nodecat): nodebird-api를 통�
 
 - localohst:4000/test 접속 => NodeCat
 
-### 10.5 SNS API 서버 만들기
+## 10.5 SNS API 서버 만들기
 
 - v1.js 포스트와 해시태그 검색 결과를 가져오는 라우터 업데이트
 - routes/index.js
@@ -100,7 +100,7 @@ API를 사용하는 서비스도 만들어 보자(Nodecat): nodebird-api를 통�
   - GET /mypost 로 자신이 작성한 포스트 JSON형식으로 가져오는 라우터 생성
   - GET /search/:hashtag 라우터는 API를 사용해 해시태그를 검색하는 라우터
 
-### 10.6 사용량 제한 구현하기
+## 10.6 사용량 제한 구현하기
 
 과도한 API사용은 서버에 무리를 가게 할 수 있음  
 express-rate-limit
@@ -119,3 +119,34 @@ express-rate-limit
 - routes/index.js
   - 버전을 v1 -> v2로 바꿈
 - 실제 서비스에서 사용량을 저장할 데이터베이스로 레디스가 많이 사용됨
+
+## 10.7 CORS 이해하기
+
+CORS, Cross-Origin Resource Sharing문제 - Access-Control-Allow-Origin에러 발생
+
+브라우저와 서버의 도메인이 일치하지 않을때 기본적으로 요청이 차단 됨  
+Access-Control-Allow-Origin 헤더를 넣으면 해결 됨  
+cors 패키지를 설치해서 해결 가능
+
+credentials: true -> 도메인 간 쿠키가 공유  
+withCredentials: true -> 쿠키를 공유해야 하는 경우
+
+- routes/v2.js
+  - 호스트와 비밀 키가 모두 일치할 때만 CORS를 허용하게 수정
+
+**프록시 서버**  
+CORS 문제를 해결 할 수 있는 방법. 서버에서 서버로 요청 할 땐 CORS 문제가 발생하지 않는다는 것을 이용한 것.  
+`http-proxy-middleware`패키지로 가능
+
+## 10.8 프로젝트 마무리하기
+
+### 핵심 정리
+
+- API는 다른 애플리케이션의 기능을 사용할 수 있게 해주는 창구
+- 모바일 서버를 구성할 때 서버를 REST API 방식으로 구현
+- API 사용자가 쉽게 사용할 수 있는 문서 준비
+- JWT토큰 내용은 공개되면 변조될 수 있다
+- 토큰 사용하여 API의 오남용 막기 -> 서버 부하
+- app.use외 router.use를 활용하여 라우터 간에 공통되는 로직을 처리할 수 있음
+- cors나 passport.authenticate처럼 미들웨어 내에서 미들웨어를 실행할 수 있음
+- 브라우저와 서버의 도메인이 다르면 요청이 거절됨(CORS)
