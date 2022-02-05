@@ -99,3 +99,23 @@ API를 사용하는 서비스도 만들어 보자(Nodecat): nodebird-api를 통�
   - API에 요청을 보내는 함수 분리
   - GET /mypost 로 자신이 작성한 포스트 JSON형식으로 가져오는 라우터 생성
   - GET /search/:hashtag 라우터는 API를 사용해 해시태그를 검색하는 라우터
+
+### 10.6 사용량 제한 구현하기
+
+과도한 API사용은 서버에 무리를 가게 할 수 있음  
+express-rate-limit
+
+- routes/middleweares.js
+  - verifyToken 미들웨어 아래에 apiLimiter 미들웨어와 deprecated 미들웨어를 추가
+  - apiLimiter: 라우터에 사용량 제한이 걸림: windowMs(기준 시간), max(허용 횟수), delayMs(호출 간격), handler(제한 초과 시 콜백 함수)
+  - deprecated: 사용하면 안 되는 라우터에 붙임
+- v2.js 추가
+  - 토큰 시간 30분으로 늘리고
+  - 라우터에 사용량 제한 미들웨어 추가
+- v1.js
+  - deprecated 미들웨어 추가하여 v1으로 접근한 모든 요청에 deprecated 응답을 보내도록 함
+- app.js
+  - 새로 만든 라우터를 서버와 연결
+- routes/index.js
+  - 버전을 v1 -> v2로 바꿈
+- 실제 서비스에서 사용량을 저장할 데이터베이스로 레디스가 많이 사용됨
