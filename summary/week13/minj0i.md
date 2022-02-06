@@ -24,7 +24,7 @@ API(Application Programming Interface), 현재 프로그램의 기능을 사용�
 - views/login.html
 - routes/index.js
   - 도메인을 등록하는 화면. 로그인 안했으면 로그인 창/ 로그인 했다면 도메인 등록 화면
-  - 서버 실행 후 localhost:8001로 접속
+  - 서버 실행 후 localhost:8002로 접속
   - GET / 접속 시 로그인 화면 보여줌
   - 도메인 등록 라우터에서는 clientSecret값을 uuid 패키지 통해 생성
   - 도메인 등록 이유: 등록한 도메인에서만 API를 사용할 수 있게 하기 위해서
