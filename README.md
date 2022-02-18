@@ -56,7 +56,7 @@
   * **13회차(2022-02-06) - 10. 웹 API 서버 만들기**
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week13/minj0i.md)
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week13/younggeun0.md)
-  * **14회차(2022-?-?) - 11. 노드 서비스 테스트하기**
+  * **14회차(2022-02-19) - 11. 노드 서비스 테스트하기**
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week14/sgmsgood.md)
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week14/minj0i.md)
   * **15회차(2022-?-?) - 12. 웹 소켓으로 실시간 데이터 전송하기**
@@ -74,8 +74,4 @@
   * **19회차(2022-?-?) - 16. 서버리스 노드 개발**
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week19/sgmsgood.md)
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week19/minj0i.md)
-### 첫 모임 때 추가로 같이 정할 사항들
 
-1. ~~정, 부 시스템 유지할지~~ => 유지
-2. 정리 범위 => 매주 정하기로
-3. NodeJS를 사용한 토이 프로젝트 => 다음 주까지 정하기로
