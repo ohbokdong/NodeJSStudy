@@ -59,7 +59,7 @@
   * **14회차(2022-02-19) - 11. 노드 서비스 테스트하기**
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week14/sgmsgood.md)
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week14/minj0i.md)
-  * **15회차(2022-?-?) - 12. 웹 소켓으로 실시간 데이터 전송하기**
+  * **15회차(2022-03-06) - 12. 웹 소켓으로 실시간 데이터 전송하기**
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week15/rlawjddbs.md)
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week15/sgmsgood.md)
   * **16회차(2022-?-?) - 13. 실시간 경매 시스템 만들기**
