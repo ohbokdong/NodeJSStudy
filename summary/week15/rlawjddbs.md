@@ -378,7 +378,7 @@ module.exports = (server) => {
 ## 12.4. 실시간 GIF 채팅방 만들기
 
 - `몽고디비`, 몽고디비 ODM `몽구스` 사용
-- [소스 너무 길다](https://github.com/ohbokdong/NodeJSStudy/summary/week15/socket.io)
+- [소스 너무 길다](https://github.com/ohbokdong/NodeJSStudy/tree/main/summary/week15/socket.io)
 
 <del>
 <details>
