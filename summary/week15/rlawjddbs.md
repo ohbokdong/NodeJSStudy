@@ -375,7 +375,7 @@ module.exports = (server) => {
 - 처음부터 웹 소켓만 사용하고 싶다면, 위 소스 주석 처리된 부분을 주석 해제 하면 됨
 </details>
 
-## 12.4. 실시간 GIF 채팅방 만들기
+## 12.4. ~ 12.7. 실시간 GIF 채팅방 만들기
 
 - `몽고디비`, 몽고디비 ODM `몽구스` 사용
 - [소스 너무 길다](https://github.com/ohbokdong/NodeJSStudy/tree/main/summary/week15/socket.io)
