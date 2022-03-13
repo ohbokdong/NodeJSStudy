@@ -14,7 +14,7 @@
 
 사용자, 제품, 경매 모델로 구성
 
-![DB 관계도](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week6/db.PNG)
+![DB 관계도](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week16/db.PNG)
 
 
 ### 사용자 인증
