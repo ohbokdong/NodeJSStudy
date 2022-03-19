@@ -236,4 +236,371 @@ npm rm -g node-cli
 ```
 
 ## 14.2 commander, inquirer 사용하기
+- 책에선 commander, inquirer, chalk 패키지를 사용한 예제 제공
+- 우선 commander 메서드들을 사용해 명령어 실행 시 사용법을 제공
+	- version - 프로그램의 버전 설정
+	- name - 명령어의 이름
+	- usage - 명령어의 사용법을 설정 가능
+	- command - 명령어를 설정하는 메서드
+		- 예제에선  template <type> 과 * 두 가지 커맨드를 만듦
+			- cli copy처럼 미리 등록하지 않은 명령어를 사용하면 * 와일드카드 명령어가 실행됨
+		- '<>' 는 필수 입력
+	- description - 명령어에 대한 설명을 설정하는 메서드
+	- alias - 명령어 별칭을 설정 가능
+	- option - 명령어에 대한 부가옵션 설정 가능
+		- name 옵션은 name 메서드와 곂칠 수 있으므로 사용하지 않는게 좋음
+	- requiredOption - option과 같은 역할을 하지만 필수로 입력해야 하는 옵션을 지정할 때 사용
+	- action - 명령어에 대한 실제 동작을 정의하는 메서드
+		- <type>과 같은 필수 요소나 옵션들을 매개변수로 가져올 수 있음
+	- help - 설명서를 보여주는 옵션
+	- parse - program 객체의 마지막에 붙이는 메서드, process.argv를 인수로 받아 명려어와 옵션을 파싱함
 
+```js
+#!/usr/bin/env node
+const { program } = require('commander');
+
+program
+    .version('1.0.0', '-v --version')
+    .name('cli');
+
+program
+    .command('template <type>')
+    .usage('<type> --filename [filename] --path [path]')
+    .description('it makes a template')
+    .alias('tmpl')
+    .option('-f, --filename [filename]', 'input your file name', 'index')
+    .option('-d, --directory [path]', 'input directory where the template made', '.')
+    .action((type, options) => {
+        console.log(type, options.filename, option.directory);
+    });
+
+program
+    .command('*', { noHelp: true })
+    .action(() => {
+        console.log("can't find the command");
+        program.help();
+    });
+
+program.parse(process.argv);
+```
+
+<p align="center"><img src="./img/young03.png"></p>
+
+- 아까 template.js내용을 추가
+	- commander 모듈을 사용하더라도 여전히 명령어를 외워야 함
+
+```js
+#!/usr/bin/env node
+
+const {
+    program
+} = require('commander');
+const fs = require('fs');
+const path = require('path');
+
+const htmlTemplate = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Template</title>
+  </head>
+  <body>
+    <h1>Hello</h1>
+    <p>CLI</p>
+  </body>
+</html>
+`;
+
+const routerTemplate = `
+const express = require('express');
+const router = express.Router();
+ 
+router.get('/', (req, res, next) => {
+   try {
+     res.send('ok');
+   } catch (error) {
+     console.error(error);
+     next(error);
+   }
+});
+ 
+module.exports = router;
+`;
+
+const exist = (dir) => { // 폴더 존제 확인 함수
+    try {
+        fs.accessSync(dir, fs.constants.F_OK | fs.constants.R_OK | fs.constants.W_OK);
+        return true;
+    } catch (e) {
+        return false;
+    }
+};
+
+const mkdirp = (dir) => { // 경로 생성 함수
+    const dirname = path
+        .relative('.', path.normalize(dir))
+        .split(path.sep)
+        .filter(p => !!p);
+    dirname.forEach((d, idx) => {
+        const pathBuilder = dirname.slice(0, idx + 1).join(path.sep);
+        if (!exist(pathBuilder)) {
+            fs.mkdirSync(pathBuilder);
+        }
+    });
+};
+
+const makeTemplate = (type, name, directory) => { // 템플릿 생성 함수
+    mkdirp(directory);
+    if (type === 'html') {
+      const pathToFile = path.join(directory, `${name}.html`);
+      if (exist(pathToFile)) {
+        console.error('이미 해당 파일이 존재합니다');
+      } else {
+        fs.writeFileSync(pathToFile, htmlTemplate);
+        console.log(pathToFile, '생성 완료');
+      }
+    } else if (type === 'express-router') {
+      const pathToFile = path.join(directory, `${name}.js`);
+      if (exist(pathToFile)) {
+        console.error('이미 해당 파일이 존재합니다');
+      } else {
+        fs.writeFileSync(pathToFile, routerTemplate);
+        console.log(pathToFile, '생성 완료');
+      }
+    } else {
+      console.error('html 또는 express-router 둘 중 하나를 입력하세요.');
+    }
+  };
+
+const dirAnswer = (answer) => { // 경로 설정
+    directory = (answer && answer.trim()) || '.';
+    rl.close();
+    makeTemplate();
+};
+
+const nameAnswer = (answer) => { // 파일명 설정
+    if (!answer || !answer.trim()) {
+        console.clear();
+        console.log('name을 반드시 입력하셔야 합니다.');
+        return rl.question('파일명을 설정하세요. ', nameAnswer);
+    }
+    name = answer;
+    return rl.question('저장할 경로를 설정하세요.(설정하지 않으면 현재경로) ', dirAnswer);
+};
+
+const typeAnswer = (answer) => { // 템플릿 종류 설정
+    if (answer !== 'html' && answer !== 'express-router') {
+        console.clear();
+        console.log('html 또는 express-router만 지원합니다.');
+        return rl.question('어떤 템플릿이 필요하십니까? ', typeAnswer);
+    }
+    type = answer;
+    return rl.question('파일명을 설정하세요. ', nameAnswer);
+};
+
+program
+    .version('1.0.0', '-v --version')
+    .name('cli');
+
+program
+    .command('template <type>')
+    .usage('<type> --filename [filename] --path [path]')
+    .description('템플릿 생성용 프로그램입니다.')
+    .alias('tmpl')
+    .option('-f, --filename [filename]', '파일명을 입력하세요', 'index')
+    .option('-d, --directory [path]', '경로명을 입력하세요', '.')
+    .action((type, options) => {
+        makeTemplate(type, options.filename, options.directory);
+    });
+
+program
+    .command('*', {
+        noHelp: true
+    })
+    .action(() => {
+        console.log("커맨드를 알 수 없습니다");
+        program.help();
+    });
+
+program.parse(process.argv);
+```
+
+- inquirer 모듈을 사용하면 cli 명령어를 사용할 때 사용자와 상호작용 가능
+	- readline 모듈을 썼을 때보다 코드가 간결해짐(inquirer 패키지 내에서 readline 모듈을 사용한다고 함)
+	- inquirer 객체는 prompt란 메서드를 가짐, 인수로 질문 목록을 받고, 프로미스를 통해 답변 객체를 반환함
+		- 질문 객체 속성
+			- type - 질문의 종류(input, checkbox, list, password, confirm 등)
+			- name - 질문의 이름, 답변 객체가 갖는 속성값
+			- message - 사용자에게 표시되는 문자열
+			- choices - 타입이 checkbox, list인 경우 선택지를 넣는 곳
+			- default - 답을 적지 않을 경우 기본값
+
+```js
+const inquirer = require('inquirer');
+...
+program
+    .command('template <type>')
+    .usage('<type> --filename [filename] --path [path]')
+    .description('템플릿 생성용 프로그램입니다.')
+    .alias('tmpl')
+    .option('-f, --filename [filename]', '파일명을 입력하세요', 'index')
+    .option('-d, --directory [path]', '경로명을 입력하세요', '.')
+    .action((type, options) => {
+        makeTemplate(type, options.filename, options.directory);
+    });
+
+program
+    .action((cmd, args) => {
+        if (args) {
+            console.log("커맨드를 알 수 없습니다");
+            program.help();
+        } else {
+            inquirer.prompt([{
+                type: 'list',
+                name: 'type',
+                message: '템플릿 종류를 선택하세요.',
+                choices: ['html', 'express-router'],  
+            }, {
+                type: 'input',
+                name: 'name',
+                message: '파일 이름을 입력하세요',
+                default: 'index',
+            }, {
+                type: 'input',
+                name: 'directory',
+                message: '파일 경로를 입력하세요',
+                default: '.',
+            }, {
+                type: 'confirm',
+                name: 'confirm',
+                message: '생성하시겠습니까?',
+            }])
+                .then(answers => {
+                    if (answers.confirm) {
+                        makeTemplate(answers.type, answers.name, answers.directory);
+                        console.log('터미널을 종료합니다.')
+                    }
+                });
+        }
+    });
+
+program.parse(process.argv);
+```
+
+
+- chalk 패키지를 사용하여 터미널에 색과 스타일 추가
+	- chalk 객체의 메서드들로 문자열을 감싸면 됨, 익숙한 색은 메서드로 기본 제공
+	- 글자색 외에도 배경색, 텍스트 스타일도 줄 수 있음
+	- 단, 터미널마다 지원하는 색과 스타일이 다르므로 모든 환경에서 같게 동작하진 않음
+
+```js
+// 기본 색상은 메서드로 지원
+chalk.red(text);
+
+// 커스텀 색상 사용 시
+chalk.rgb(r,g,b)(text);
+chalk.hex('#000000')(text);
+
+// 이런식으로 메서드 체이닝으로 스타일을 줄 수 있음
+chalk.red.bgBlue.bold(text);
+```
+
+```js
+const makeTemplate = (type, name, directory) => { // 템플릿 생성 함수
+    mkdirp(directory);
+    if (type === 'html') {
+      const pathToFile = path.join(directory, `${name}.html`);
+      if (exist(pathToFile)) {
+        console.error(chalk.bold.red('이미 해당 파일이 존재합니다'));
+      } else {
+        fs.writeFileSync(pathToFile, htmlTemplate);
+        console.log(chalk.green(pathToFile, '생성 완료'));
+      }
+    } else if (type === 'express-router') {
+      const pathToFile = path.join(directory, `${name}.js`);
+      if (exist(pathToFile)) {
+        console.error(chalk.bold.red('이미 해당 파일이 존재합니다'));
+      } else {
+        fs.writeFileSync(pathToFile, routerTemplate);
+        console.log(chalk.green(pathToFile, '생성 완료'));
+      }
+    } else {
+      console.error(chalk.bold.red('html 또는 express-router 둘 중 하나를 입력하세요.'));
+    }
+  };
+..
+program
+    .action((cmd, args) => {
+        if (args) {
+            console.log(chalk.bold.red("커맨드를 알 수 없습니다"));
+            program.help();
+        } else {
+            inquirer.prompt([{
+                type: 'list',
+                name: 'type',
+                message: '템플릿 종류를 선택하세요.',
+                choices: ['html', 'express-router'],  
+            }, {
+                type: 'input',
+                name: 'name',
+                message: '파일 이름을 입력하세요',
+                default: 'index',
+            }, {
+                type: 'input',
+                name: 'directory',
+                message: '파일 경로를 입력하세요',
+                default: '.',
+            }, {
+                type: 'confirm',
+                name: 'confirm',
+                message: '생성하시겠습니까?',
+            }])
+                .then(answers => {
+                    if (answers.confirm) {
+                        makeTemplate(answers.type, answers.name, answers.directory);
+                        console.log(chalk.rgb(128,128,128)('터미널을 종료합니다.'));
+                    }
+                });
+        }
+    });
+```
+
+<p align="center"><img src="./img/young04.png"></p>
+
+## 14.3.1 스스로 해보기
+- 해보세요~
+
+
+## 느낌표 두개 (Double Exclamation Marks)
+- https://stackoverflow.com/questions/784929/what-is-the-not-not-operator-in-javascript
+- nonboolean형 타입을 boolean 형으로 바꾸기 위해 사용
+- 연산자(Operator)는 아니고 단지 두 번의 부정을 수행하는 것
+
+```js
+// 아래와 두 결과는 같음
+Boolean(5) === !!5;
+
+!!false === false
+!!true === true
+
+!!0 === false
+!!parseInt('foo') === false // NaN is falsey
+!!1 === true
+!!-1 === true // -1 is truthy
+!!(1/0) === true // Infinity is truthy
+
+!!'' === false // empty string is falsey
+!!'foo' === true // non-empty string is truthy
+!!'false' === true // ...even if it contains a falsey value
+
+!!window.foo === false // undefined value is falsey
+!!undefined === false // undefined primitive is falsey
+!!null === false // null is falsey
+
+!!{} === true // an (empty) object is truthy
+!![] === true // an (empty) array is truthy;
+
+!!new Boolean(false) // 객체니까 truthy 때문에 true
+!!Boolean(false) // false
+```
