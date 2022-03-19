@@ -38,8 +38,7 @@ console.log('Hello CLI');
 
 - bin 속성이 콘솔 명령어와 해당 명령어를 호출할 때 실행 파일을 설정하는 객체
 
-```json
-# pacakage.json
+```js
 {
     ...
     "bin": {
@@ -100,6 +99,9 @@ rl.question('노드 스터디가 재미있습니까?(y/n)', (answer) => {
 
 - 템플릿 파일을 만들어주는 프로그램
 	- 명령어 타입 이름 디렉토리명 을 입력받으면 바로 생성하지만 외우기 힘들기 때문에 타입 이름 디렉토리명을 입력 안받은 경우도 순서대로 입력해 설정할 수 있도록 설계
+
+
+<details><summary>코드보기</summary>
 
 ```js
 #!/usr/bin/env node
@@ -229,6 +231,9 @@ const program = () => {
 program(); // 프로그램 실행부
 ```
 
+</details>
+<br/>
+
 - 전역으로 설치했던 cli 프로그램 삭제
 
 ```bash
@@ -288,6 +293,8 @@ program.parse(process.argv);
 
 - 아까 template.js내용을 추가
 	- commander 모듈을 사용하더라도 여전히 명령어를 외워야 함
+
+<details><summary>코드보기</summary>
 
 ```js
 #!/usr/bin/env node
@@ -425,6 +432,9 @@ program
 
 program.parse(process.argv);
 ```
+
+</details>
+<br/>
 
 - inquirer 모듈을 사용하면 cli 명령어를 사용할 때 사용자와 상호작용 가능
 	- readline 모듈을 썼을 때보다 코드가 간결해짐(inquirer 패키지 내에서 readline 모듈을 사용한다고 함)
@@ -572,8 +582,8 @@ program
 - 해보세요~
 
 
-## 느낌표 두개 (Double Exclamation Marks)
-- https://stackoverflow.com/questions/784929/what-is-the-not-not-operator-in-javascript
+
+## [느낌표 두개 (Double Exclamation Marks)](https://stackoverflow.com/questions/784929/what-is-the-not-not-operator-in-javascript)
 - nonboolean형 타입을 boolean 형으로 바꾸기 위해 사용
 - 연산자(Operator)는 아니고 단지 두 번의 부정을 수행하는 것
 
