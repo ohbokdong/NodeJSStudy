@@ -62,10 +62,10 @@
   * **15회차(2022-03-06) - 12. 웹 소켓으로 실시간 데이터 전송하기**
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week15/rlawjddbs.md)
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week15/sgmsgood.md)
-  * **16회차(2022-?-?) - 13. 실시간 경매 시스템 만들기**
+  * **16회차(2022-03-13) - 13. 실시간 경매 시스템 만들기**
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week16/ch.choi.md)
     * [rlawjddbs](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week16/rlawjddbs.md)
-  * **17회차(2022-?-?) - 14. CLI 프로그램 만들기**
+  * **17회차(2022-03-20) - 14. CLI 프로그램 만들기**
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week17/younggeun0.md)
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week17/ch.choi.md)
   * **18회차(2022-?-?) - 15. AWS와 GCP로 배포하기**
