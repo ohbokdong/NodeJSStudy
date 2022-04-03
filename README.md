@@ -2,7 +2,7 @@
 
 ---
 
-**2021-10 ~ 2022-?**
+**2021-10 ~ 2022-04**
 * **진행 방법**
   * 교재 : `Node.js 교과서`
   * **주 중**
@@ -68,10 +68,10 @@
   * **17회차(2022-03-20) - 14. CLI 프로그램 만들기**
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week17/younggeun0.md)
     * [ch.choi](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week17/ch.choi.md)
-  * **18회차(2022-?-?) - 15. AWS와 GCP로 배포하기**
+  * **18회차(2022-04-03) - 15. AWS와 GCP로 배포하기**
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week18/minj0i.md)
     * [younggeun0](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week18/younggeun0.md)
-  * **19회차(2022-?-?) - 16. 서버리스 노드 개발**
+  * **19회차(2022-04-03) - 16. 서버리스 노드 개발**
     * [sgmsgood](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week19/sgmsgood.md)
     * [minj0i](https://github.com/ohbokdong/NodeJSStudy/blob/main/summary/week19/minj0i.md)
 
